@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "G:\\Electron\\source\\repos\\rackham-realestatecrawler\\rackham-realestatecrawler.csproj": {}
+    "g:\\Electron\\source\\repos\\rackham-realestatecrawler\\rackham-realestatecrawler.csproj": {}
   },
   "projects": {
-    "G:\\Electron\\source\\repos\\rackham-realestatecrawler\\rackham-realestatecrawler.csproj": {
+    "g:\\Electron\\source\\repos\\rackham-realestatecrawler\\rackham-realestatecrawler.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\Electron\\source\\repos\\rackham-realestatecrawler\\rackham-realestatecrawler.csproj",
+        "projectUniqueName": "g:\\Electron\\source\\repos\\rackham-realestatecrawler\\rackham-realestatecrawler.csproj",
         "projectName": "rackham-realestatecrawler",
-        "projectPath": "G:\\Electron\\source\\repos\\rackham-realestatecrawler\\rackham-realestatecrawler.csproj",
+        "projectPath": "g:\\Electron\\source\\repos\\rackham-realestatecrawler\\rackham-realestatecrawler.csproj",
         "packagesPath": "C:\\Users\\Max\\.nuget\\packages\\",
-        "outputPath": "G:\\Electron\\source\\repos\\rackham-realestatecrawler\\obj\\",
+        "outputPath": "g:\\Electron\\source\\repos\\rackham-realestatecrawler\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Max\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -37,6 +37,12 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "dependencies": {
+            "ElectronCgi.DotNet": {
+              "target": "Package",
+              "version": "[1.0.2, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

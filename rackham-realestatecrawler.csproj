@@ -6,4 +6,8 @@
     <RootNamespace>rackham_realestatecrawler</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="ElectronCgi.DotNet" Version="1.0.2" />
+  </ItemGroup>
+
 </Project>
