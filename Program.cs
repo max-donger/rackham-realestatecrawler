@@ -6,7 +6,7 @@ namespace rackham_realestatecrawler
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Ahoy mateys!");
         }
     }
 }
