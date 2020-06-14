@@ -1,0 +1,13 @@
+G:\Electron\source\repos\rackham-realestatecrawler\bin\Debug\netcoreapp3.1\rackham-realestatecrawler.exe
+G:\Electron\source\repos\rackham-realestatecrawler\bin\Debug\netcoreapp3.1\rackham-realestatecrawler.deps.json
+G:\Electron\source\repos\rackham-realestatecrawler\bin\Debug\netcoreapp3.1\rackham-realestatecrawler.runtimeconfig.json
+G:\Electron\source\repos\rackham-realestatecrawler\bin\Debug\netcoreapp3.1\rackham-realestatecrawler.runtimeconfig.dev.json
+G:\Electron\source\repos\rackham-realestatecrawler\bin\Debug\netcoreapp3.1\rackham-realestatecrawler.dll
+G:\Electron\source\repos\rackham-realestatecrawler\bin\Debug\netcoreapp3.1\rackham-realestatecrawler.pdb
+G:\Electron\source\repos\rackham-realestatecrawler\obj\Debug\netcoreapp3.1\rackham-realestatecrawler.csprojAssemblyReference.cache
+G:\Electron\source\repos\rackham-realestatecrawler\obj\Debug\netcoreapp3.1\rackham-realestatecrawler.csproj.CoreCompileInputs.cache
+G:\Electron\source\repos\rackham-realestatecrawler\obj\Debug\netcoreapp3.1\rackham-realestatecrawler.AssemblyInfoInputs.cache
+G:\Electron\source\repos\rackham-realestatecrawler\obj\Debug\netcoreapp3.1\rackham-realestatecrawler.AssemblyInfo.cs
+G:\Electron\source\repos\rackham-realestatecrawler\obj\Debug\netcoreapp3.1\rackham-realestatecrawler.dll
+G:\Electron\source\repos\rackham-realestatecrawler\obj\Debug\netcoreapp3.1\rackham-realestatecrawler.pdb
+G:\Electron\source\repos\rackham-realestatecrawler\obj\Debug\netcoreapp3.1\rackham-realestatecrawler.genruntimeconfig.cache
