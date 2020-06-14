@@ -1,1 +1,6 @@
+# C# build folders
+bin
+obj
+
+# Logs
 rackham-trace.log
