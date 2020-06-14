@@ -2,5 +2,8 @@
 bin
 obj
 
+# Output
+out
+
 # Logs
 rackham-trace.log
