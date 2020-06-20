@@ -1,0 +1,29 @@
+{
+	"Source": "Funda",
+	"Realestate":[{
+		"id": "3432TK109",
+		"streetname": "Hoornseschans",
+		"number": "109",
+		"zipcode": "3432 TK",
+		"city": "Nieuwegein",
+		"asking_price": "150000",
+		"original_price": "175000",
+		"build_year": "1986",
+		"size_in_sqm": "42",
+		"rooms": "2",
+		"status": "Verkocht onder voorbehoud"
+	},
+    {
+    "id": "1337AB42",
+    "streetname": "Teststraat",
+    "number": "42",
+    "zipcode": "1337 AB",
+    "city": "Utrecht",
+    "asking_price": "150000",
+    "original_price": "",
+    "build_year": "1991",
+    "size_in_sqm": "50",
+    "rooms": "3",
+    "status": "Beschikbaar"
+  }]
+}

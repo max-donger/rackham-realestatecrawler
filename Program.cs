@@ -15,7 +15,9 @@ namespace Rackham
             var crawler = new Crawler();
             var crawlSource = "TibiaMMO";
 
-            await crawler.Crawl(crawlSource);
+            Console.Error.WriteLine($"Starting Rackham");
+
+            //await crawler.Crawl(crawlSource);
 
             // Start the API Service. Must be run last because it is not async.
             APIService.Start();

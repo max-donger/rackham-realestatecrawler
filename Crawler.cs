@@ -2,8 +2,11 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System.Linq;
 using System;
+using System.IO;
+using System.Globalization;
 
 namespace Rackham
 {
@@ -13,25 +16,47 @@ namespace Rackham
         public int UpvoteCount { get; set; }
         public string Url { get; set; }
     }
+    public class JsonSource 
+    {
+        //[JsonProperty("source")]
+        public string Source { get; set; }
+
+        //[JsonProperty("realestate")]
+        public IList<string> Realestate { get; set; }
+    }
+
     public class Crawler
     {
         private HttpClient client = new HttpClient();
 
         public async Task Crawl(string source)
         {
+            // TODO: No longer fetch from reddit but fetch from actual source
             var jsonStr = await client.GetStringAsync(string.IsNullOrEmpty(source) ? $"https://reddit.com/.json" : $"https://reddit.com/r/{source}.json");
 
             var subredditResponse = JsonConvert.DeserializeObject<dynamic>(jsonStr);
 
-            // Only this and the jsonStr is probably needed if im gonna write to a file, and i should return from that file instead?
+            // Saving to a file so it can be used as a cache.
             System.IO.File.WriteAllText("G:/Electron/source/repos/rackham-realestatecrawler/out/real-estate.json", jsonStr);            
         }
 
         public async Task<IEnumerable<PostInfo>> GetLatestCrawl(string source)
         {
+            //JsonReader funda = JsonConvert.DeserializeObject<JsonReader>(File.ReadAllText(@"G:/Electron/source/repos/rackham-realestatecrawler/test/funda.json"));
+            
             var jsonStr = await client.GetStringAsync(string.IsNullOrEmpty(source) ? $"https://reddit.com/.json" : $"https://reddit.com/r/{source}.json");
 
             var subredditResponse = JsonConvert.DeserializeObject<dynamic>(jsonStr);
+
+            /*var data = File.ReadAllText(@"G:/Electron/source/repos/rackham-realestatecrawler/test/funda.json");
+            var terry = JsonConvert.DeserializeObject<JsonSource>(data);
+
+            return ((IEnumerable<dynamic>)terry).Select(post => new JsonSource
+            {
+                Source = post.Source
+            });
+            */
+
             return ((IEnumerable<dynamic>)subredditResponse.data.children).Select(post => new PostInfo
             {
                 Title = post.data.title,
@@ -44,6 +69,7 @@ namespace Rackham
         {
             int output;
 
+            // TODO: Remove randomness for testing and add actual check
             Random rand = new Random();
             if (rand.Next(0, 2) != 0)
             {

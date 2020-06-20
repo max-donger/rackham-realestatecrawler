@@ -40,7 +40,7 @@ namespace Rackham
                             return;
                         try
                         {
-                            await crawler.Crawl(selectedSubreddit);
+                            await crawler.Crawl(selectedSubreddit); //updates the json
                             var posts = await crawler.GetLatestCrawl(selectedSubreddit);
                             connection.Send("show-posts", posts);
                             await Task.Delay(5000);
