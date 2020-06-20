@@ -44,20 +44,17 @@ namespace Rackham
         {
             //JsonReader funda = JsonConvert.DeserializeObject<JsonReader>(File.ReadAllText(@"G:/Electron/source/repos/rackham-realestatecrawler/test/funda.json"));
             
-            var jsonStr = await client.GetStringAsync(string.IsNullOrEmpty(source) ? $"https://reddit.com/.json" : $"https://reddit.com/r/{source}.json");
+            var data = File.ReadAllText(@"G:/Electron/source/repos/rackham-realestatecrawler/test/funda.json");
+            var terry = JsonConvert.DeserializeObject<dynamic>(data);
 
-            var subredditResponse = JsonConvert.DeserializeObject<dynamic>(jsonStr);
-
-            /*var data = File.ReadAllText(@"G:/Electron/source/repos/rackham-realestatecrawler/test/funda.json");
-            var terry = JsonConvert.DeserializeObject<JsonSource>(data);
-
+            /*
             return ((IEnumerable<dynamic>)terry).Select(post => new JsonSource
             {
                 Source = post.Source
             });
             */
 
-            return ((IEnumerable<dynamic>)subredditResponse.data.children).Select(post => new PostInfo
+            return ((IEnumerable<dynamic>)terry.data.realestate).Select(post => new PostInfo
             {
                 Title = post.data.title,
                 UpvoteCount = post.data.ups,
