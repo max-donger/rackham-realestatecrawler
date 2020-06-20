@@ -11,7 +11,7 @@ namespace Rackham
     {
         public static void Start()
         {
-            var redditClient = new Crawler();
+            var crawler = new Crawler();
             var connection = new ConnectionBuilder()
                                     .WithLogging(minimumLogLevel: LogLevel.Trace, logFilePath: "rackham-trace.log")
                                     .Build();
@@ -20,6 +20,12 @@ namespace Rackham
             connection.On("select-subreddit", (string newSubreddit) =>
             {
                 selectedSubreddit = newSubreddit;
+            });
+
+            connection.OnAsync("connection-status", async (string source) =>
+            {
+                var status = await crawler.checkStatus(source);
+                return status;
             });
 
             CancellationTokenSource cancelationTokenSource = new CancellationTokenSource();
@@ -34,8 +40,9 @@ namespace Rackham
                             return;
                         try
                         {
-                            await redditClient.Start(selectedSubreddit);
-                            // connection.Send("show-posts", posts);
+                            await crawler.Crawl(selectedSubreddit);
+                            var posts = await crawler.GetLatestCrawl(selectedSubreddit);
+                            connection.Send("show-posts", posts);
                             await Task.Delay(5000);
                         }
                         catch (Exception ex)

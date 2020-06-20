@@ -13,9 +13,9 @@ namespace Rackham
         {
             var service = new APIService();
             var crawler = new Crawler();
-            var selectedSubreddit = "TibiaMMO";
+            var crawlSource = "TibiaMMO";
 
-            await crawler.Start(selectedSubreddit);
+            await crawler.Crawl(crawlSource);
 
             // Start the API Service. Must be run last because it is not async.
             APIService.Start();
