@@ -17,12 +17,6 @@ using tweetapistream = Tweetinvi.Stream; // Due to ambiguity with System.IO.Stre
 
 namespace Rackham
 {
-    public class RealEstateInfo
-    {
-        public string Title { get; set; }
-        public string UpvoteCount { get; set; }
-        public string Url { get; set; }
-    }
 
     public class Crawler
     {
@@ -79,7 +73,7 @@ namespace Rackham
         }
         private async Task Selenium() {
             IWebDriver driver = new FirefoxDriver();
-            RealEstateInfo realEstateInfo = new RealEstateInfo();
+            // RealEstateInfo realEstateInfo = new RealEstateInfo(); // I moved to Service.cs
 
             /* Selenium
             driver.Url = "http://donger.tv/heneknowledgebase";
@@ -96,20 +90,6 @@ namespace Rackham
             File.WriteAllText(@"G:/Electron/source/repos/rackham-realestatecrawler/test/fundaOUT.json", JsonConvert.SerializeObject(realEstateInfo));
 
             */
-        }
-
- 
-        // TODO: Should I move to Service.cs?
-        public async Task<IEnumerable<RealEstateInfo>> GetLatestCrawl(string source)
-        {
-            var jsonLocal = JsonConvert.DeserializeObject<dynamic>(File.ReadAllText(@"G:/Electron/source/repos/rackham-realestatecrawler/test/funda.json"));
-
-            return ((IEnumerable<dynamic>)jsonLocal.realestate).Select(post => new RealEstateInfo
-            {
-                Title = post.streetname,
-                UpvoteCount = post.number,
-                Url = post.zipcode
-            });
         }
 
         // TODO: Should I move to Service.cs?
