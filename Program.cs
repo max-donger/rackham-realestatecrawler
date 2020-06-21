@@ -13,14 +13,16 @@ namespace Rackham
         {
             var service = new APIService();
             var crawler = new Crawler();
-            var crawlSource = "TibiaMMO";
+            var estateAgency = "MoenGarantiemakelaars";
 
-            Console.Error.WriteLine($"Starting Rackham");
+            await crawler.Crawl(estateAgency);
 
-            //await crawler.Crawl(crawlSource);
-
+            // TODO: Not write to the Error line but currently it would go to the Dufresne pipeline then
             // Start the API Service. Must be run last because it is not async.
+            Console.Error.WriteLine($"Starting API Service..."); 
             APIService.Start();
+
+            
         }
     }
 }

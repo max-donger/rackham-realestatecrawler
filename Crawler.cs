@@ -5,63 +5,114 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Linq;
 using System;
+using System.Configuration;
 using System.IO;
 using System.Globalization;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Remote;
+using OpenQA.Selenium.Firefox;
+using Tweetinvi;
+using Tweetinvi.Models;
+using tweetapistream = Tweetinvi.Stream; // Due to ambiguity with System.IO.Stream, I had to change the name
 
 namespace Rackham
 {
-    public class PostInfo
+    public class RealEstateInfo
     {
         public string Title { get; set; }
-        public int UpvoteCount { get; set; }
+        public string UpvoteCount { get; set; }
         public string Url { get; set; }
-    }
-    public class JsonSource 
-    {
-        //[JsonProperty("source")]
-        public string Source { get; set; }
-
-        //[JsonProperty("realestate")]
-        public IList<string> Realestate { get; set; }
     }
 
     public class Crawler
     {
         private HttpClient client = new HttpClient();
 
-        public async Task Crawl(string source)
+        public async Task Crawl(string estateAgency)
         {
-            // TODO: No longer fetch from reddit but fetch from actual source
-            var jsonStr = await client.GetStringAsync(string.IsNullOrEmpty(source) ? $"https://reddit.com/.json" : $"https://reddit.com/r/{source}.json");
-
-            var subredditResponse = JsonConvert.DeserializeObject<dynamic>(jsonStr);
-
-            // Saving to a file so it can be used as a cache.
-            System.IO.File.WriteAllText("G:/Electron/source/repos/rackham-realestatecrawler/out/real-estate.json", jsonStr);            
+            // TODO: Remove this? This is old code which fetched from Reddit.json file
+            // jsonRemote = await client.GetStringAsync(string.IsNullOrEmpty(source) ? $"https://reddit.com/.json" : $"https://reddit.com/r/{source}.json");
+            // System.IO.File.WriteAllText("G:/Electron/source/repos/rackham-realestatecrawler/out/real-estate.json", jsonRemote);            
+            try {
+                await Twitter(estateAgency);
+                //await Selenium(estateAgency);
+            }
+            catch {
+                throw new System.ArgumentException("Could not find estate agency.", estateAgency);
+            }
         }
 
-        public async Task<IEnumerable<PostInfo>> GetLatestCrawl(string source)
-        {
-            //JsonReader funda = JsonConvert.DeserializeObject<JsonReader>(File.ReadAllText(@"G:/Electron/source/repos/rackham-realestatecrawler/test/funda.json"));
-            
-            var data = File.ReadAllText(@"G:/Electron/source/repos/rackham-realestatecrawler/test/funda.json");
-            var terry = JsonConvert.DeserializeObject<dynamic>(data);
+        private async Task Twitter(string estateAgency) {
+            // Set up your credentials (https://apps.twitter.com)
+            Auth.SetUserCredentials(ConfigurationManager.AppSettings["TwitterConsumerKey"], ConfigurationManager.AppSettings["TwitterConsumerSecret"], ConfigurationManager.AppSettings["TwitterAccessToken"], ConfigurationManager.AppSettings["TwitterAccessTokenSecret"]);
 
-            /*
-            return ((IEnumerable<dynamic>)terry).Select(post => new JsonSource
-            {
-                Source = post.Source
-            });
+            if (estateAgency == "MoenGarantiemakelaars") {
+                // Fetch the latest 5 tweets (not retweets) and print them
+                var timeline = Timeline.GetUserTimeline(User.GetUserFromScreenName("Huistekoop030"), 5).ToList();
+                File.WriteAllText($"G:/Electron/source/repos/rackham-realestatecrawler/out/{estateAgency}.json", JsonConvert.SerializeObject(timeline));
+            }
+            else if (estateAgency == "placeholderEstateAgentWithoutTwitter") {
+                // TODO: Handle this
+                Console.Error.WriteLine("Estate agency does not have a Twitter account.");
+            }
+            else {
+                throw new System.ArgumentException("Unknown estateAgency.", estateAgency);
+            }
+
+            /*  TODO: Use WebHooks instead of using a stream of a users timeline.
+            https://developer.twitter.com/en/docs/accounts-and-users/subscribe-account-activity/guides/getting-started-with-webhooks
+            https://github.com/linvi/tweetinvi/wiki/Webhooks
             */
+            /* Livestream
+            var stream = tweetapistream.CreateFilteredStream();
+            Console.Error.WriteLine("I am listening to Twitter");
 
-            return ((IEnumerable<dynamic>)terry.data.realestate).Select(post => new PostInfo
+            stream.AddFollow(User.GetUserFromScreenName("Huistekoop030"));
+            
+            stream.MatchingTweetReceived += (sender, arguments) =>
             {
-                Title = post.data.title,
-                UpvoteCount = post.data.ups,
-                Url = post.data.url
+                Console.Error.WriteLine(arguments.Tweet.Text);
+            };
+
+            stream.StartStreamMatchingAllConditions();
+            */
+        }
+        private async Task Selenium() {
+            IWebDriver driver = new FirefoxDriver();
+            RealEstateInfo realEstateInfo = new RealEstateInfo();
+
+            /* Selenium
+            driver.Url = "http://donger.tv/heneknowledgebase";
+
+            // Browse the website
+            driver.FindElement(By.CssSelector("#epkb_tab_2 > .epkb-category-level-1")).Click();
+            driver.FindElement(By.CssSelector(".epkb_tab_2 > .section_light_shadow:nth-child(2) .eckb-article-title > span")).Click();
+            
+            // Set the values
+            realEstateInfo.Title = driver.FindElement(By.LinkText("techlog")).Text; 
+            realEstateInfo.UpvoteCount = "bla2";
+            realEstateInfo.Url = "bla";
+
+            File.WriteAllText(@"G:/Electron/source/repos/rackham-realestatecrawler/test/fundaOUT.json", JsonConvert.SerializeObject(realEstateInfo));
+
+            */
+        }
+
+ 
+        // TODO: Should I move to Service.cs?
+        public async Task<IEnumerable<RealEstateInfo>> GetLatestCrawl(string source)
+        {
+            var jsonLocal = JsonConvert.DeserializeObject<dynamic>(File.ReadAllText(@"G:/Electron/source/repos/rackham-realestatecrawler/test/funda.json"));
+
+            return ((IEnumerable<dynamic>)jsonLocal.realestate).Select(post => new RealEstateInfo
+            {
+                Title = post.streetname,
+                UpvoteCount = post.number,
+                Url = post.zipcode
             });
         }
 
+        // TODO: Should I move to Service.cs?
         public async Task<int> checkStatus(string source)
         {
             int output;

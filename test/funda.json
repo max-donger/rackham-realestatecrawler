@@ -1,24 +1,17 @@
 {
-  "kind": "Listing",
-  "data": {
-    "source": "Funda",
-    "realestate": [
+  "source": "Funda",
+  "realestate": [
       {
-        "kind": "t3",
-        "data": {
-          "title": "Monthly Question Thread | June 2020",
-          "ups": 12,
-          "url": "https://www.reddit.com/r/TibiaMMO/comments/guhzxp/monthly_question_thread_june_2020/"
-        }
+        "id": "3432TK109",
+         "streetname": "Hoorneschans",
+         "number": "109",
+         "zipcode": "3432 TK"
       },
       {
-        "kind": "t3",
-        "data": {
-          "title": "Is Tibia down right now?",
-          "ups": 3,
-          "url": "https://www.reddit.com/r/TibiaMMO/comments/hcgban/is_tibia_down_right_now/"
-        }
+        "id": "1337AB42",
+	    "streetname": "Teststraat",
+	    "number": "42",
+	    "zipcode": "1337 AB"
       }
     ]
-  }
 }
