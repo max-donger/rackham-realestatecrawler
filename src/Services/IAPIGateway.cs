@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using ElectronCgi.DotNet;
 
-namespace Rackham
+namespace Privateer.Rackham.Services
 {
-    public interface IService
+    public interface IAPIGateway
     {
-        Task<bool> GetConnectionStatus(Connection connection);
+        Task<int> GetConnectionStatus();
     }
 }

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using ElectronCgi.DotNet;
 
-namespace Rackham
+namespace Privateer.Rackham
 {
-    public interface IWebHost
+    public interface IWebHostService
     {
-        public Connection connection {get; set;}
+        public Connection Connection {get; set;}
         public void BuildWebHost();
     }
 }

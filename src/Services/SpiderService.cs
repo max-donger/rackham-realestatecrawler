@@ -1,56 +1,60 @@
-using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using System.Linq;
 using System;
 using System.Configuration;
 using System.IO;
-using System.Globalization;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Remote;
-using OpenQA.Selenium.Firefox;
 using Tweetinvi;
-using Tweetinvi.Models;
-using tweetapistream = Tweetinvi.Stream; // Due to ambiguity with System.IO.Stream, I had to change the name
+using Privateer.Rackham.Models;
+using ElectronCgi.DotNet;
 
-namespace Rackham
+
+namespace Privateer.Rackham.Services
 {
-
-    public class Crawler
+    public class SpiderService : ISpiderService
     {
-        private HttpClient client = new HttpClient();
-
-        public async Task Crawl(string estateAgency)
+        public Task<IEnumerable<Spider>> ReadAllAsync()
         {
-            // TODO: Remove this? This is old code which fetched from Reddit.json file
-            // jsonRemote = await client.GetStringAsync(string.IsNullOrEmpty(source) ? $"https://reddit.com/.json" : $"https://reddit.com/r/{source}.json");
-            // System.IO.File.WriteAllText("G:/Electron/source/repos/rackham-realestatecrawler/out/real-estate.json", jsonRemote);            
-            try {
-                await Twitter(estateAgency);
-                //await Selenium(estateAgency);
-            }
-            catch {
-                throw new System.ArgumentException("Could not find estate agency.", estateAgency);
-            }
+            throw new NotImplementedException();
         }
 
-        private async Task Twitter(string estateAgency) {
+        public Task<Spider> ReadOneAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Spider> ToggleActiveAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task Crawl(EstateAgency estateAgency)
+        {      
+            try {
+                // await TwitterAPI(estateAgency);
+                // await Selenium(estateAgency);
+            }
+            catch {
+                // throw new System.ArgumentException("Could not find estate agency.", estateAgency.Name);
+            }
+        }
+        private async Task TwitterAPI(EstateAgency estateAgency) {
             // Set up your credentials (https://apps.twitter.com)
             Auth.SetUserCredentials(ConfigurationManager.AppSettings["TwitterConsumerKey"], ConfigurationManager.AppSettings["TwitterConsumerSecret"], ConfigurationManager.AppSettings["TwitterAccessToken"], ConfigurationManager.AppSettings["TwitterAccessTokenSecret"]);
 
-            if (estateAgency == "MoenGarantiemakelaars") {
+            // TODO: Should be keys, and the estateAgencies should be generated already, or editable and then add a twitter handle.
+            if (estateAgency.Name == "MoenGarantiemakelaars") {
                 // Fetch the latest 5 tweets (not retweets) and print them
                 var timeline = Timeline.GetUserTimeline(User.GetUserFromScreenName("Huistekoop030"), 5).ToList();
                 File.WriteAllText($"G:/Electron/source/repos/rackham-realestatecrawler/out/{estateAgency}.json", JsonConvert.SerializeObject(timeline));
             }
-            else if (estateAgency == "placeholderEstateAgentWithoutTwitter") {
+            else if (estateAgency.Name == "placeholderEstateAgentWithoutTwitter") {
                 // TODO: Handle this
                 Console.Error.WriteLine("Estate agency does not have a Twitter account.");
             }
             else {
-                throw new System.ArgumentException("Unknown estateAgency.", estateAgency);
+                throw new System.ArgumentException("Unknown estateAgency.", estateAgency.Name);
             }
 
             /*  TODO: Use WebHooks instead of using a stream of a users timeline.
@@ -71,28 +75,29 @@ namespace Rackham
             stream.StartStreamMatchingAllConditions();
             */
         }
-        private async Task Selenium() {
-            IWebDriver driver = new FirefoxDriver();
+        private async Task Selenium(EstateAgency estateAgency) {
+            throw new NotImplementedException();
+            // IWebDriver driver = new FirefoxDriver();
             // RealEstateInfo realEstateInfo = new RealEstateInfo(); // I moved to Service.cs
 
-            /* Selenium
-            driver.Url = "http://donger.tv/heneknowledgebase";
+            // driver.Url = "http://donger.tv/heneknowledgebase";
 
             // Browse the website
-            driver.FindElement(By.CssSelector("#epkb_tab_2 > .epkb-category-level-1")).Click();
-            driver.FindElement(By.CssSelector(".epkb_tab_2 > .section_light_shadow:nth-child(2) .eckb-article-title > span")).Click();
+            // driver.FindElement(By.CssSelector("#epkb_tab_2 > .epkb-category-level-1")).Click();
+            // driver.FindElement(By.CssSelector(".epkb_tab_2 > .section_light_shadow:nth-child(2) .eckb-article-title > span")).Click();
             
             // Set the values
+            /*
             realEstateInfo.Title = driver.FindElement(By.LinkText("techlog")).Text; 
             realEstateInfo.UpvoteCount = "bla2";
             realEstateInfo.Url = "bla";
 
             File.WriteAllText(@"G:/Electron/source/repos/rackham-realestatecrawler/test/fundaOUT.json", JsonConvert.SerializeObject(realEstateInfo));
-
             */
+            
         }
 
-        // TODO: Should I move to Service.cs?
+        // TODO: Reference me
         public async Task<int> checkStatus(string source)
         {
             int output;

@@ -1,7 +1,8 @@
-    
+// Currently unused
+/*    
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Rackham
+namespace Privateer.Rackham
 {
     
     public class Startup
@@ -13,3 +14,4 @@ namespace Rackham
         }
     }
 }
+*/
