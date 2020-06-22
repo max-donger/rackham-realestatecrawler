@@ -21,7 +21,13 @@ namespace Privateer.Rackham.Services
 
         public APIGateway(IWebHostService webHost) {
             _myWebHost = webHost ?? throw new ArgumentNullException(nameof(webHost));
-            SpiderService spiderService = new SpiderService();
+
+            // Should my APIGateway hold these? Or does this belong to Startup.cs
+            SpiderRepository spiderRepository = new SpiderRepository(new Spider[]{
+                new Spider { Name = "Spider X" },
+                new Spider { Name = "Spider Y" }
+            });
+            SpiderService spiderService = new SpiderService(spiderRepository);
 
             // TODO: Can I move this all elsewhere?
             // Get the connection status

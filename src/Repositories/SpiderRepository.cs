@@ -1,24 +1,30 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
+using System.Linq;
 using Privateer.Rackham.Models;
-using ElectronCgi.DotNet;
 
 namespace Privateer.Rackham.Repositories
 {
     public class SpiderRepository : ISpiderRepository
     {
-        public Task<IEnumerable<Spider>> ReadAllAsync(Connection connection)
+        private readonly List<Spider> _spiders;
+        public SpiderRepository(IEnumerable<Spider> spiders) 
+        {
+            if (spiders == null) { throw new ArgumentNullException(nameof(spiders)); }
+            _spiders = new List<Spider>(spiders);
+        }
+        public Task<IEnumerable<Spider>> ReadAllAsync()
+        {
+            return Task.FromResult(_spiders.AsEnumerable());
+        }
+
+        public Task<Spider> ReadOneAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<Spider> ReadOneAsync(Connection connection)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Spider> ToggleActiveAsync(Connection connection)
+        public Task<Spider> ToggleActiveAsync()
         {
             throw new NotImplementedException();
         }

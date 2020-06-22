@@ -6,17 +6,24 @@ using System;
 using System.Configuration;
 using System.IO;
 using Tweetinvi;
-using Privateer.Rackham.Models;
 using ElectronCgi.DotNet;
+using Privateer.Rackham.Models;
+using Privateer.Rackham.Repositories;
 
 
 namespace Privateer.Rackham.Services
 {
     public class SpiderService : ISpiderService
     {
+        private ISpiderRepository _spiderRepository;
+        public SpiderService(ISpiderRepository spiderRepository) 
+        {
+            _spiderRepository = spiderRepository ?? throw new ArgumentNullException(nameof(spiderRepository));
+        }
+
         public Task<IEnumerable<Spider>> ReadAllAsync()
         {
-            throw new NotImplementedException();
+            return _spiderRepository.ReadAllAsync();
         }
 
         public Task<Spider> ReadOneAsync()

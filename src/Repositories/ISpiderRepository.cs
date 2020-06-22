@@ -7,9 +7,9 @@ namespace Privateer.Rackham.Repositories
 {
     public interface ISpiderRepository
     {   
-        Task<IEnumerable<Spider>> ReadAllAsync(Connection connection);
-        Task<Spider> ReadOneAsync(Connection connection);
-        Task<Spider> ToggleActiveAsync(Connection connection);
+        Task<IEnumerable<Spider>> ReadAllAsync();
+        Task<Spider> ReadOneAsync();
+        Task<Spider> ToggleActiveAsync();
         
     }
 }
