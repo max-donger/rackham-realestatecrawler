@@ -39,8 +39,9 @@ namespace Privateer.Rackham.Controllers
 
                 // Assert
                 var okResult = Assert.IsType<OkObjectResult>(result);
-                // ControllerUnderTest is not generating the same spiders as the 3 above
-                Assert.Same(expectedSpiders, result);
+
+                // TODO: I dont understand why okResult has a .Value and result doesnt, but this will work for now
+                Assert.Same(expectedSpiders, okResult.Value);
             }
         }
         public class ReadOneAsync : SpiderControllerTest
