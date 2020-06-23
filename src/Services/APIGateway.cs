@@ -24,8 +24,8 @@ namespace Privateer.Rackham.Services
 
             // Should my APIGateway hold these? Or does this belong to Startup.cs
             SpiderRepository spiderRepository = new SpiderRepository(new Spider[]{
-                new Spider { Name = "Spider X" },
-                new Spider { Name = "Spider Y" }
+                new Spider { Key = Guid.NewGuid().ToString(), Name = "Spider A" },
+                new Spider { Key = Guid.NewGuid().ToString(), Name = "Spider B" }
             });
             SpiderService spiderService = new SpiderService(spiderRepository);
 
@@ -37,10 +37,11 @@ namespace Privateer.Rackham.Services
                 await GetConnectionStatus();
             });
 
-            _myWebHost.Connection.OnAsync("get-all-spiders", async (string source) =>
+            _myWebHost.Connection.OnAsync("get-all-spiders", async () =>
             {
-                Console.WriteLine("Getting all spiders");
-                await spiderService.ReadAllAsync();
+                // TODO prevent Dufresne from reading this -> Console.WriteLine("Getting all spiders");
+                var allSpiders = await spiderService.ReadAllAsync();
+                return allSpiders;
             });
 
             // on receiving "start"
@@ -82,7 +83,7 @@ namespace Privateer.Rackham.Services
             });
 
             // Listen for incoming messages. Must be run last because it is not async.
-            Console.WriteLine("Listening...");
+            // TODO prevent Dufresne from reading this -> Console.WriteLine("Listening...");
             _myWebHost.Connection.Listen();   
         }
 

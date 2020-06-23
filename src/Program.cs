@@ -16,7 +16,7 @@ namespace Privateer.Rackham
             var webhostService = new WebHostService();
 
             // Build the webhost so connections can be accepted
-            Console.WriteLine("Building webhost");
+            // TODO prevent Dufresne from reading this -> Console.WriteLine("Building webhost");
             webhostService.BuildWebHost();
             
             // SpiderService spiderService = new SpiderService();
