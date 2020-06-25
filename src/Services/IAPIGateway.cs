@@ -8,6 +8,6 @@ namespace Privateer.Rackham.Services
 {
     public interface IAPIGateway
     {
-        Task<int> GetConnectionStatus();
+        Task<int> GetSpiderStatus();
     }
 }

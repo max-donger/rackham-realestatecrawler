@@ -1,28 +1,21 @@
-﻿using ElectronCgi.DotNet;
-using Microsoft.Extensions.Logging;
+﻿using Privateer.Rackham.Services;
 using System;
-using System.Threading.Tasks;
-using System.Threading;
-using Privateer.Rackham.Services;
-using Privateer.Rackham.Repositories;
-using Privateer.Rackham.Models;
 
 namespace Privateer.Rackham
 {
     public class Program
     {
+        // TODO prevent Dufresne from all Console.WriteLine in this project. Current workaround is Console.Error.WriteLine
         public static void Main(string[] args)
         {
             var webhostService = new WebHostService();
 
-            // Build the webhost so connections can be accepted
-            // TODO prevent Dufresne from reading this -> Console.WriteLine("Building webhost");
+            // Build the WebHost so connections can be accepted  
+            Console.Error.WriteLine("Building WebHost...");
             webhostService.BuildWebHost();
             
-            // SpiderService spiderService = new SpiderService();
-            // spiderService.Crawl(estateAgency);
-
-            // Start listening...
+            // Start the API Gateway
+            Console.Error.WriteLine("Starting API Gateway...");
             new APIGateway(webhostService);
         }
     }
