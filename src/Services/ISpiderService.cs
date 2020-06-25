@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ElectronCgi.DotNet;
 using Privateer.Rackham.Models;
 
 namespace Privateer.Rackham.Services

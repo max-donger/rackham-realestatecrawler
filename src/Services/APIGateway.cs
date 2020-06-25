@@ -1,7 +1,6 @@
 using Privateer.Rackham.Models;
 using Privateer.Rackham.Repositories;
 using System;
-using System.Threading.Tasks;
 
 namespace Privateer.Rackham.Services
 {
