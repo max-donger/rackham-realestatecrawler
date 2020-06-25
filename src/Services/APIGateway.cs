@@ -21,11 +21,11 @@ namespace Privateer.Rackham.Services
             });
             SpiderService spiderService = new SpiderService(spiderRepository);
 
-            _myWebHost.Connection.OnAsync("get-spider-status", async (string source) =>
+            _myWebHost.Connection.OnAsync("get-one-spider-status", async (string source) =>
             {
-                Console.Error.WriteLine("Getting spider status...");
-                var connectionStatus = await GetSpiderStatus();
-                return connectionStatus;
+                Console.Error.WriteLine("Getting one spider status...");
+                var oneSpiderStatus = await spiderService.ReadOneStatusAsync();
+                return oneSpiderStatus;
             });
 
             _myWebHost.Connection.OnAsync("get-all-spiders", async () =>
@@ -38,23 +38,6 @@ namespace Privateer.Rackham.Services
             // Listen for incoming messages. Must be run last because it is not async.
             Console.Error.WriteLine("Listening to incoming API requests...");
             _myWebHost.Connection.Listen();   
-        }
-
-        public async Task<int> GetSpiderStatus() {
-            int output;
-            // TODO: Move this to the SpiderService and remove randomness for testing and add actual check
-            Random rand = new Random();
-            if (rand.Next(0, 2) != 0)
-            {
-                output = 1;
-            }
-            else {
-                output = 2;
-            }
-            Console.WriteLine("ConnectionStatus = " + output);
-            return output;
-        }
-
-    
+        }    
     }
 }

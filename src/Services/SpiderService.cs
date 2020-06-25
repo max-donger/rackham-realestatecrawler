@@ -104,22 +104,22 @@ namespace Privateer.Rackham.Services
             
         }
 
-        // TODO: Reference me
-        public async Task<int> checkStatus(string source)
+        // TODO: Add argument for spider
+        public async Task<int> ReadOneStatusAsync()
         {
-            int output;
-
+            int status;
             // TODO: Remove randomness for testing and add actual check
+            
             Random rand = new Random();
             if (rand.Next(0, 2) != 0)
             {
-                output = 1;
+                status = 1;
             }
             else {
-                output = 2;
+                status = 2;
             }
             
-            return output;
+            return status;
         }
     }
 }

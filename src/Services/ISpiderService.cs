@@ -13,5 +13,7 @@ namespace Privateer.Rackham.Services
         Task<Spider> ToggleActiveAsync();
         // Crawl
         Task Crawl(EstateAgency estateAgency);
+        // TODO: Add ReadAllStatusAsync
+        Task<int> ReadOneStatusAsync();
     }
 }
