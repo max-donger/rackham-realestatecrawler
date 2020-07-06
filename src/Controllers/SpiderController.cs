@@ -15,6 +15,7 @@ namespace Privateer.Rackham.Controllers
         {
             _spiderService = spiderService ?? throw new ArgumentNullException(nameof(spiderService));
         }
+        
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<Spider>), 200)]
         public async Task<IActionResult> ReadAllAsync()
@@ -26,9 +27,29 @@ namespace Privateer.Rackham.Controllers
         {
             throw new NotImplementedException();
         }
-        public Task ToggleActiveAsync()
+
+        [HttpGet]
+        [ProducesResponseType(typeof(int), 200)]
+        public async Task<IActionResult> ToggleOneActiveAsync()
         {
-            throw new NotImplementedException();
+            string spiderKey = "67b0bf97-e9d4-4195-b372-d172b6777889";
+            var oneSpiderActive = await _spiderService.ToggleOneActiveAsync(spiderKey);
+            return Ok(oneSpiderActive);
         }
+
+        // TODO: Add to ISpiderController?
+        /*[HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<Spider>), 200)]
+        public async Task<Spider> ToggleOneCrawlAsync(Website website)
+        {      
+            try {
+                var oneCrawl = await _spiderService.ToggleOneCrawlAsync(website);
+                // await Selenium(estateAgency);
+            }
+            catch {
+                // throw new System.ArgumentException("Could not find estate agency.", estateAgency.Name);
+            }
+            return Ok(oneCrawl);
+        } */
     }
 }

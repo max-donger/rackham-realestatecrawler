@@ -59,7 +59,7 @@ namespace Privateer.Rackham.Controllers
             public async Task Should_toggle_spider_active_status()
             {
                 // Arrange, Act, Assert
-                var exception = await Assert.ThrowsAsync<NotImplementedException>(() => ControllerUnderTest.ToggleActiveAsync());
+                var exception = await Assert.ThrowsAsync<NotImplementedException>(() => ControllerUnderTest.ToggleOneActiveAsync());
             }
         }
     }

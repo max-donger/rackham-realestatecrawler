@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Configuration;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
 
@@ -30,21 +31,27 @@ namespace Privateer.Rackham.Services
             throw new NotImplementedException();
         }
 
-        public Task<Spider> ToggleActiveAsync()
+        public async Task<int> ToggleOneActiveAsync(string spiderKey)
         {
-            throw new NotImplementedException();
+            var toggledActiveSpider = await _spiderRepository.ToggleOneActiveAsync(spiderKey);
+            return toggledActiveSpider;
         }
 
-        public async Task Crawl(EstateAgency estateAgency)
-        {      
+        /*
+        public async Task ToggleOneCrawlAsync(EstateAgency estateAgency, Website website)
+        {
+            // TODO: Add if for website here
             try {
-                // await TwitterAPI(estateAgency);
+                await TwitterAPI(estateAgency);
                 // await Selenium(estateAgency);
             }
             catch {
-                // throw new System.ArgumentException("Could not find estate agency.", estateAgency.Name);
+                throw new System.ArgumentException("Could not find estate agency.", estateAgency.Name);
             }
+            return _spiderRepository.ToggleOneCrawlAsync(Website website);
         }
+        */
+
         private async Task TwitterAPI(EstateAgency estateAgency) {
             // Set up your credentials (https://apps.twitter.com)
             Auth.SetUserCredentials(ConfigurationManager.AppSettings["TwitterConsumerKey"], ConfigurationManager.AppSettings["TwitterConsumerSecret"], ConfigurationManager.AppSettings["TwitterAccessToken"], ConfigurationManager.AppSettings["TwitterAccessTokenSecret"]);

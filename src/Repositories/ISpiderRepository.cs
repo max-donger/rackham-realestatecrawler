@@ -8,7 +8,7 @@ namespace Privateer.Rackham.Repositories
     {   
         Task<IEnumerable<Spider>> ReadAllAsync();
         Task<Spider> ReadOneAsync();
-        Task<Spider> ToggleActiveAsync();
-        
+        Task<int> ToggleOneActiveAsync(string spiderKey);
+
     }
 }

@@ -56,8 +56,13 @@ namespace Privateer.Rackham.Services
             [Fact]
             public async Task Should_toggle_spider_active_status()
             {
-                // Arrange, Act, Assert
-                var exception = await Assert.ThrowsAsync<NotImplementedException>(() => ServiceUnderTest.ToggleActiveAsync());
+                // Arrange
+
+                // TODO: Fix this testcase, spiderKey has to be set
+                var spiderKey = "67b0bf97-e9d4-4195-b372-d172b6777889";
+                
+                // Act, Assert
+                var exception = await Assert.ThrowsAsync<NotImplementedException>(() => ServiceUnderTest.ToggleOneActiveAsync(spiderKey));
             }
         }
     }
